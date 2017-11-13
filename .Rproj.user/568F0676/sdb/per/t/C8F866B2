@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#' Query LiDAR points from database and write them into table\n#' ###TEst change\n#'\n#' @description\n#' Query LiDAR points from database and write them into table by landuse. x-, y-coordinates, intensity and height.\n#'\n#' @param dat_path path for the table output\n#' @param r_pnts points within this radius from locations (in meter) will be taken into account (default = 10)\n#' @param db_layers vector of database layer names for wich the wuery should be made.\n#' @param db adress of the database (default = \"http://192.168.191.183:8081\")\n#' @param db_login string of username and password for the database (default = \"username:password\")\n#' @param location data.frame with at least 3 columns with the column names \"plotID\", \"xpnt\" and \"y_pnt\".\n#'\n#' @return RData file containing a data.frame called \"pnts\"\n#'\n#' @name points_query\n#'\n#' @export points_query\n#'\n#' @details NONE\n#'\n#' @references\n#'\n#' @seealso NONE\n#'\n#' @examples\n#' \\dontrun{\n#' #Not run\n#' }\n#'\npoints_query <- function( dat_path, r_pnts = 10, db_layers = c(\"kili\", \"kili2\"), db = \"http://192.168.191.183:8081\",\n                    db_login = \"user:password\", location){\n  library(rPointDB)\n  library(dplyr)\n  remotesensing <- RemoteSensing$new(db, db_login)\n  points_all_lay <- lapply(db_layers, function(i){\n    pointdb <- remotesensing$lidar(i)\n    points_lay <- lapply(location$plotID, function(j){\n      extent <- extent_radius(x = location$x_pnt[j], y = location$y_pnt[j], r = r_pnts)\n      points <- pointdb$query(ext = extent)\n      if (nrow(points)!= 0){\n        points$plotID <- location$plotID[j]\n        points$layer <- i\n      }\n      return(points)\n    })\n    points_lay_bnd <- do.call(rbind, points_lay)\n  })\n  points_all <- do.call(rbind, points_all_lay)\n  rm(points_all_lay)\n\n  plt_min <- setNames(aggregate(z ~ plotID, points_all, min), c(\"plotID\", \"h_min\"))\n  pnts <- left_join(points_all, plt_min, by = \"plotID\")\n  rm(points_all)\n  pnts$h_rel <- pnts$z-pnts$h_min\n  pnts$landuse <- substr(pnts$plotID, 1, 3)\n  pnts <- pnts[,c(which(colnames(pnts) == \"plotID\"), which(colnames(pnts) == \"landuse\"),\n                  which(colnames(pnts) == \"x\") : which(colnames(pnts) == \"classificationFlags\"),\n                  which(colnames(pnts) == \"layer\") : which(colnames(pnts) == \"h_rel\"))]\n\n  save(pnts, file = paste0(dat_path, \"points_\", r_pnts, \"m.RData\"))\n  #write(paste0(\"r_pnts = \", r_pnts), file = paste0(dat_path, \"points_\", r_pnts, \"m.txt\"))\n\n\n}\n",
+    "created" : 1510580312311.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4128888554",
+    "id" : "C8F866B2",
+    "lastKnownWriteTime" : 1510580325,
+    "last_content_update" : 1510580325637,
+    "path" : "E:/packages_general/LiDARtools/R/points_query.R",
+    "project_path" : "R/points_query.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
