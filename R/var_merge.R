@@ -1,18 +1,39 @@
-# Description:
-# Author: Alice Ziegler
-# Date: 2017-10-12 11:55:18
-
+#' Merge tables with plotbased information
+#'
+#' @description
+#' Merge tables with plotbased information
+#'
+#' @param dat_path path for the table output
+#' @param lst_vars_path all file names without "ending".RData" within dat_pat that should be merged
+#'
+#' @return RData file containing a data.frame called "gap_structure_<sidelength of raster>"
+#'
+#' @name gap_fraction
+#'
+#' @export gap_fraction
+#'
+#' @details NONE
+#'
+#' @references
+#'
+#' @seealso NONE
+#'
+#' @examples
+#' \dontrun{
+#' #Not run
+#' }
 ########################################################################################
-###Documentation
 ########################################################################################
 
 var_merge <- function(dat_path, lst_vars_path){
   for (i in 1:length(lst_vars_path)){
-   tmp <- get (load (paste0(dat_path,lst_vars_path[i],".RData")))
+   tmp <- get(load(paste0(dat_path,lst_vars_path[i],".RData")))
+   print(i)
     if(i==1){
     result <- tmp
     }else{
       result <- merge(result,tmp,by.x="plotID",by.y="plotID")
     }
-  }}
+  }
+  }
 
