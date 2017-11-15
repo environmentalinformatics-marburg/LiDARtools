@@ -6,7 +6,7 @@
 #'
 #' @param dat_path path for the table output
 #' @param r_pnts points within this radius from locations (in meter) will be taken into account (default = 10)
-#' @param db_layers vector of database layer names for wich the wuery should be made.
+#' @param db_layers vector of database layer names for wich the query should be made.
 #' @param db adress of the database (default = "http://192.168.191.183:8081")
 #' @param db_login string of username and password for the database (default = "username:password")
 #' @param location data.frame with at least 3 columns with the column names "plotID", "xpnt" and "y_pnt".

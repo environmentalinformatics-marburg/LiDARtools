@@ -1,15 +1,9 @@
 #' Calculate structural variables from poibt table
 #'
 #' @description
-#' Calculate structural variables from point table from \code{\link{points_query}}. If no table with points is
-#' passed, but all other necessary information for \code{\link{points_query}}, it will be executed automatically.
+#' Calculate structural variables from point table from \code{\link{points_query}}.
 #'
 #' @param dat_path path for the table output
-#' @param r_pnts points within this radius from locations (in meter) will be taken into account (default = 10)
-#' @param db_layers vector of database layer names for wich the wuery should be made.
-#' @param db adress of the database (default = "http://192.168.191.183:8081")
-#' @param db_login string of username and password for the database (default = "username:password")
-#' @param location data.frame with at least 3 columns with the column names "plotID", "xpnt" and "y_pnt".
 #' @param pnts_path filename of the RData created in \code{\link{points_query}}
 #'
 #' @return RData file containing a data.frame called "ldr_str_pnts"
@@ -32,17 +26,8 @@
 ########################################################################################
 
 ########################################################################################
-point_structure <- function(dat_path, pnts_path = NA, r_pnts = NA, db_layers = NA, db = NA, db_login = NA,
-                            location = NA){
+point_structure <- function(dat_path, pnts_path = NA){
   library(pls)
-  if (missing(pnts_path)){
-    if(any(is.na(c(r_pnts, db_layers, db, db_login, location)))){
-      stop("One or more arguments missing for point query (r_pnts, db_layers, db, db_login or location)")
-    }
-    source("E:/packages_general/WoLi/points_query.R")
-    points_query(dat_path = dat_path, location = location)
-    pnts_path <- paste0("points_", r_pnts, "m.RData")
-  }
   load(paste0(dat_path, pnts_path))
   r_nm <- substr(pnts_path,nchar(pnts_path) - 8, nchar(pnts_path) - 7)
   str_var_plt <- lapply(unique(as.character(pnts$plotID)), function(i){

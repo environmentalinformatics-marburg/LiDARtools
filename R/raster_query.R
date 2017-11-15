@@ -1,14 +1,38 @@
-# Description: 
-# Author: Alice Ziegler
-# Date: 2017-10-17 09:01:15
+#' Query Raster from database and write them into file
+#'
+#' @description
+#' Query Raster from database and write them into GTiff file
+#'
+#' @param dat_path path for the table output
+#' @param d_rst diameter (=sidelength) for raster query in m
+#' @param db_layers vector of database layer names for wich the query should be made.
+#' @param db adress of the database (default = "http://192.168.191.183:8081")
+#' @param db_login string of username and password for the database (default = "username:password")
+#' @param group_name name of the group in the database
+#' @param rst_type vector of the raster layers that should be derived from database ()
+#' @param location data.frame with at least 3 columns with the column names "plotID", "xpnt" and "y_pnt".
+#' @param pnts_path filename of the RData created in \code{\link{points_query}}
+#'
+#' @return One Geotiff per location
+#'
+#' @name raster_query
+#'
+#' @export raster_query
+#'
+#' @details NONE
+#'
+#' @references
+#'
+#' @seealso NONE
+#'
+#' @examples
+#' \dontrun{
+#' #Not run
+#' }
 
 ########################################################################################
-###Documentation
 ########################################################################################
-
-########################################################################################
-########################################################################################
-raster_query <- function(dat_path, d_rst = 50, db_layers = c("kili", "kili2"), db = "http://192.168.191.183:8081", 
+raster_query <- function(dat_path, d_rst = 50, db_layers = c("kili", "kili2"), db = "http://192.168.191.183:8081",
                          db_login = "user:password", group_name = "kili", rst_type = c("chm"), location){
   library(rPointDB)
   library(raster)
@@ -22,7 +46,8 @@ raster_query <- function(dat_path, d_rst = 50, db_layers = c("kili", "kili2"), d
         rst <- pointdb$query_raster(ext = ext, type = k)
         if (all(is.na(rst@data@values)) == FALSE){
           dir.create(paste0(dat_path, "raster_db_", d_rst, "m/", k, "/"), showWarnings = F, recursive = T)
-          writeRaster(rst, filename = paste0(dat_path, "raster_db_", d_rst, "m/", k, "/", j, "_", i, "_", d_rst, ".tif"), format = "GTiff", 
+          writeRaster(rst, filename = paste0(dat_path, "raster_db_", d_rst, "m/", k, "/", j, "_", i, "_",
+                                             d_rst, ".tif"), format = "GTiff",
                       overwrite = T)
         }
       }
