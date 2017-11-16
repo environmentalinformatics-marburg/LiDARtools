@@ -28,12 +28,12 @@
 var_merge <- function(dat_path, lst_vars_path){
   for (i in 1:length(lst_vars_path)){
    tmp <- get(load(paste0(dat_path,lst_vars_path[i],".RData")))
-   print(i)
     if(i==1){
-    result <- tmp
+    mrg_tbl <- tmp
     }else{
-      result <- merge(result,tmp,by.x="plotID",by.y="plotID")
+      mrg_tbl <- merge(mrg_tbl,tmp,by.x="plotID",by.y="plotID")
     }
   }
+  save(mrg_tbl, file = paste0(dat_path, "dat_ldr_mrg", ".RData"))
   }
 

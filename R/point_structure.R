@@ -69,5 +69,5 @@ point_structure <- function(dat_path, pnts_path = NA){
   for (i in 1:ncol(point_structure)) {
     point_structure[, i] <- unlist(point_structure[, i])
   }
-  save(point_structure, file = paste0(dat_path, "point_structure_", r_nm, "m.RData"))
+  save(point_structure, file = paste0(dat_path, "point_structure.RData"))
 }
