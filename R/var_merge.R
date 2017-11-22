@@ -8,9 +8,9 @@
 #'
 #' @return RData file containing a data.frame called "gap_structure_<sidelength of raster>"
 #'
-#' @name gap_fraction
+#' @name var_merge
 #'
-#' @export gap_fraction
+#' @export var_merge
 #'
 #' @details NONE
 #'

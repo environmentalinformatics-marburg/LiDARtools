@@ -34,22 +34,24 @@ gap_fraction <- function(dat_path, chm_path, gap_hght = 10, gap_sze = 9){
   require(rgdal)
   chm_lst <- list.files(chm_path)
   gap_frac_all <- lapply(chm_lst, function(i){
-    chm <- raster::raster(paste0(chm_path, i))
-    raster::values(chm)[raster::values(chm) < gap_hght] <- NA
-    raster::values(chm)[is.finite(raster::values(chm))] <- 0
-    raster::values(chm)[is.na(raster::values(chm))] <- 1
-    clmp <- raster::clump(chm, directions = 8, gaps = F)
-    frq<-raster::as.data.frame(raster::freq(clmp))
+    chm <-raster(paste0(chm_path, i))
+    values(chm)[values(chm) < gap_hght] <- NA
+    values(chm)[is.finite(values(chm))] <- 0
+    values(chm)[is.na(values(chm))] <- 1
+    clmp <- clump(chm, directions = 8, gaps = F)
+    frq<-as.data.frame(freq(clmp))
     excludeID <- frq$value[which(frq$count <= gap_sze)]
     sieve <- clmp
+    #sieve[clmp %in% excludeID] <- NA
+    #sieve[excludeID %in% clmp] <- NA
     sieve[values(clmp) %in% excludeID] <- NA
-    total_count <- length(raster::values(sieve))
-    clear_count <- sum(is.finite(raster::values(sieve)))
-    cover_count <- sum(is.na(raster::values(sieve)))
+    total_count <- length(values(sieve))
+    clear_count <- sum(is.finite(values(sieve)))
+    cover_count <- sum(is.na(values(sieve)))
     gap_frac_plt <- clear_count / total_count
     return(list(substr(i,1,4), gap_frac_plt))
   })
-  gap_frac <- raster::as.data.frame(do.call(rbind, gap_frac_all))
+  gap_frac <- as.data.frame(do.call(rbind, gap_frac_all))
   colnames(gap_frac) <- c("plotID", "gap_frac")
   for (i in 1:ncol(gap_frac)) {
     gap_frac[, i] <- unlist(gap_frac[, i])
