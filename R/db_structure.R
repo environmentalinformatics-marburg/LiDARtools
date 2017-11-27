@@ -56,10 +56,5 @@ structure_query <- function( dat_path, r_pnts = 10, db_layers = c("kili", "kili2
   })
   db_structure <- do.call(rbind, str_var_all_lay)
   colnames(db_structure)[1] <- "plotID"
-  db_structure$plotID <- location$plotID###############################################durch STefans neuimplementierung ändern
   save(db_structure, file = paste0(dat_path, "db_structure.RData"))
   }
-
-
-structure_query(dat_path = dat_path, location = location)
-load( file = paste0(dat_path, "db_structure.RData"))
