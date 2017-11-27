@@ -32,9 +32,10 @@ pnts_path <- paste0("points_", r_pnts, "m.RData")
 chm_path <- paste0(dat_path, "raster_db_", d_rst, "m/", rst_type[1], "/")
 
 point_str_path <- "point_structure"
+db_str_path <- "db_structure"
 gap_frac_path <- "gap_structure"
 dat_SR_path <- "dat_SR"
-lst_vars_path <- c(dat_SR_path, point_str_path, gap_frac_path)
+lst_vars_path <- c(dat_SR_path, db_str_path, point_str_path, gap_frac_path)
 ########################################################################################
 ###Do it (Don't change anything past this point except you know what you are doing!)
 ########################################################################################
@@ -51,4 +52,4 @@ gap_fraction(dat_path = dat_path, chm_path = chm_path, gap_hght = 10, gap_sze = 
 ###
 
 var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path)
-load(paste0(dat_path, "dat_ldr_merge.RData"))
+load(paste0(dat_path, "dat_ldr_mrg.RData"))
