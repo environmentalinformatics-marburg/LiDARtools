@@ -14,7 +14,7 @@ library(LiDARtools)
 
 #Sources: 
 setwd("F:/Projekte/Kili/src/")
-sub <- "mar18/"
+sub <- "mar18_50m/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
 
@@ -22,7 +22,7 @@ dat_path <- paste0("../data/", sub)
 ###Settings
 ########################################################################################
 
-r_pnts <- 10
+r_pnts <- 25
 d_rst <- 50
 db_layers <- c("kili", "kili2")
 db <- "http://192.168.191.183:8081"
@@ -51,19 +51,19 @@ lst_vars_path <- c(dat_SR_path, db_str_path, point_str_path, gap_frac_path, trai
 ########################################################################################
 ###Do it (Don't change anything past this point except you know what you are doing!)
 ########################################################################################
-points_query(dat_path = dat_path, location = location)
+points_query(dat_path = dat_path, location = location, r_pnts = r_pnts)
 #usecase get points
-point_structure(dat_path = dat_path, pnts_path = pnts_path)
+point_structure(dat_path = dat_path, pnts_path = pnts_path, r_pnts = r_pnts)
 
-
+db_structure(dat_path = dat_path, r_pnts = r_pnts)
 
 raster_query(dat_path = dat_path, d_rst = d_rst, db_layers = db_layers, group_name = group_name, db = db, 
              db_login = db_login, location = location, rst_type = rst_type)
 
-gap_fraction(dat_path = dat_path, chm_path = chm_path, gap_hght = 10, gap_sze = 9)
+gap_fraction(dat_path = dat_path, chm_path = chm_path, gap_hght = gap_hght, gap_sze = gap_sze)
 ###
 #merging
 ###
 
 var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path)
-load(paste0(dat_path, "dat_ldr_mrg.RData"))
+tbl <- get(load(paste0(dat_path, "dat_ldr_mrg.RData")))

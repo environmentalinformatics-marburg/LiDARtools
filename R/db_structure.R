@@ -28,7 +28,7 @@
 #' #Not run
 #' }
 #'
-db_structure <- function( dat_path, r_pnts = 10, db_layers = c("kili", "kili2"), group_name = "kili",
+db_structure <- function( dat_path, r_pnts, db_layers = c("kili", "kili2"), group_name = "kili",
                              db = "http://192.168.191.183:8081", db_login = "user:password", location = NA,
                              functions = NULL){
   library(rPointDB)

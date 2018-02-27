@@ -29,7 +29,7 @@
 
 ########################################################################################
 ########################################################################################
-gap_fraction <- function(dat_path, chm_path, gap_hght = 10, gap_sze = 9){
+gap_fraction <- function(dat_path, chm_path, gap_hght, gap_sze){
   require(raster)
   require(rgdal)
   chm_lst <- list.files(chm_path)
