@@ -55,6 +55,8 @@ points_query(dat_path = dat_path, location = location)
 #usecase get points
 point_structure(dat_path = dat_path, pnts_path = pnts_path)
 
+
+
 raster_query(dat_path = dat_path, d_rst = d_rst, db_layers = db_layers, group_name = group_name, db = db, 
              db_login = db_login, location = location, rst_type = rst_type)
 
