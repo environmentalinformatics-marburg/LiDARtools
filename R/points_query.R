@@ -37,7 +37,7 @@ points_query <- function( dat_path, r_pnts, db_layers = c("kili", "kili2"), db =
     pointdb <- remotesensing$lidar(i)
     points_lay <- lapply(location$plotID, function(j){
       extent <- extent_radius(x = location$x_pnt[j], y = location$y_pnt[j], r = r_pnts)
-      points <- pointdb$query(ext = extent)
+      points <- pointdb$query(ext = extent, normalise = "ground")
       if (nrow(points)!= 0){
         points$plotID <- location$plotID[j]
         points$layer <- i
