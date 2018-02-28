@@ -15,7 +15,7 @@ library(LiDARtools)
 
 #Sources: 
 setwd("F:/Projekte/Kili/src/")
-sub <- "mar18_50m_resid/"
+sub <- "mar18_50m_resid_nrmlz/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
 

@@ -27,11 +27,15 @@
 
 ########################################################################################
 point_structure <- function(dat_path, pnts_path = NA){
+  source("knapp_make.profile.from.XYZ_function.R") # muss im Ordner src liegen (ist working 
+  # directory, wenn diese function über LiDARtools_wrap aufgerufen wird.)
+  source("knapp_vertical.foliage.profile_function.R") #dito
   library(pls)
   load(paste0(dat_path, pnts_path))
   r_nm <- substr(pnts_path,nchar(pnts_path) - 8, nchar(pnts_path) - 7)
   str_var_plt <- lapply(unique(as.character(pnts$plotID)), function(i){
     pnts_tmp <- pnts[which(pnts$plotID == i),]
+    pnts_tmp <- pnts_tmp[which(pnts_tmp$z >= 0),]
     qntl <- quantile(pnts_tmp$h_rel, probs=seq(0,1,0.25))
     qntl_0 <- qntl[[1]]
     qntl_25 <- qntl[[2]]
@@ -58,9 +62,15 @@ point_structure <- function(dat_path, pnts_path = NA){
     max_angl <- max(abs(pnts_tmp$scanAngleRank))
     av_angl <- mean(abs(pnts_tmp$scanAngleRank))
     nmbr_pnts_org <- nrow(pnts_tmp)
+    
+    ###LAI calculation
+    XYZ.table <- pnts_tmp[,c(which(colnames(pnts_tmp) == "x") : which(colnames(pnts_tmp) == "z"))]
+    profile <- make.profile.from.XYZ(XYZ.table = XYZ.table)
+    vert_fol_profile <- vertical.foliage.profile(profile = profile, k = 0.3)
+    LAI <- sum(vert_fol_profile)
 
     return(list(plotID = i, max_hght = max_hght, sd = sd_hght, mdn_rtrn = mdn_rtrn, max_rtrn = max_rtrn,
-                sd_rtrn_1 = sd_rtrn_1, sd_nmbr_rtrn = sd_nmbr_rtrn, qntl_0 = qntl_0, qntl_25 = qntl_25,
+                sd_rtrn_1 = sd_rtrn_1, sd_nmbr_rtrn = sd_nmbr_rtrn, LAI = LAI, qntl_0 = qntl_0, qntl_25 = qntl_25,
                 qntl_50 = qntl_50, qntl_75 = qntl_75, qntl_100 = qntl_100, qntl_rng = qntl_rng,
                 #cffnt_intcpt = cffnt_intcpt, cffnt_x = cffnt_x, cffnt_x2 = cffnt_x2, cffnt_x3 = cffnt_x3,
                 layer = layer, max_angl = max_angl, av_angl = av_angl, nmbr_pnts_org = nmbr_pnts_org))
