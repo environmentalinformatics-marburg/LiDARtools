@@ -69,3 +69,5 @@ gap_fraction(dat_path = dat_path, chm_path = chm_path, gap_hght = gap_hght, gap_
 
 var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path)
 tbl <- get(load(paste0(dat_path, "dat_ldr_mrg.RData")))
+
+
