@@ -3,6 +3,7 @@
 # Date: 2018-02-26 17:46:58
 # to do: dat_SR.RData befindet sich eigentlich in anderem Ordner als die ganzen LiDAR parameter. 
 # entweder anders programmieren, oder immer dat_SR in den entsprechenden Ordner kopieren
+# traits entfernen
 ####missing structure query!!!!
 rm(list=ls())
 
@@ -14,7 +15,7 @@ library(LiDARtools)
 
 #Sources: 
 setwd("F:/Projekte/Kili/src/")
-sub <- "mar18_50m/"
+sub <- "mar18_50m_resid/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
 
@@ -46,14 +47,15 @@ db_str_path <- "db_structure"
 gap_frac_path <- "gap_structure"
 dat_SR_path <- "dat_SR"
 traits_path <- "traits"
-lst_vars_path <- c(dat_SR_path, db_str_path, point_str_path, gap_frac_path, traits_path)
+SR_residuals_path <- "SR_residuals"
+lst_vars_path <- c(dat_SR_path, SR_residuals_path, db_str_path, point_str_path, gap_frac_path, traits_path)
 
 ########################################################################################
 ###Do it (Don't change anything past this point except you know what you are doing!)
 ########################################################################################
 points_query(dat_path = dat_path, location = location, r_pnts = r_pnts)
 #usecase get points
-point_structure(dat_path = dat_path, pnts_path = pnts_path, r_pnts = r_pnts)
+point_structure(dat_path = dat_path, pnts_path = pnts_path)
 
 db_structure(dat_path = dat_path, r_pnts = r_pnts)
 
