@@ -57,6 +57,8 @@ points_query(dat_path = dat_path, location = location, r_pnts = r_pnts)
 #usecase get points
 point_structure(dat_path = dat_path, pnts_path = pnts_path)
 
+load(paste0(dat_path, "point_structure.RData"))
+
 db_structure(dat_path = dat_path, r_pnts = r_pnts)
 
 raster_query(dat_path = dat_path, d_rst = d_rst, db_layers = db_layers, group_name = group_name, db = db, 
@@ -69,5 +71,3 @@ gap_fraction(dat_path = dat_path, chm_path = chm_path, gap_hght = gap_hght, gap_
 
 var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path)
 tbl <- get(load(paste0(dat_path, "dat_ldr_mrg.RData")))
-
-
