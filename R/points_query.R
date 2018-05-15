@@ -28,7 +28,7 @@
 #' #Not run
 #' }
 #'
-points_query <- function( dat_path, r_pnts, db_layers = c("kili", "kili2"), db = "http://192.168.191.183:8081",
+points_query <- function( dat_path, r_pnts, db_layers = c("kili", "kili2"), db = "http://137.248.191.215:8081",
                     db_login = "user:password", location){
   library(rPointDB)
   library(dplyr)

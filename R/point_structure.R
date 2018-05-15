@@ -27,9 +27,9 @@
 
 ########################################################################################
 point_structure <- function(dat_path, pnts_path = NA){
-  source("F:/Projekte/Kili/src/knapp_make.profile.from.XYZ_function.R") # muss im Ordner src liegen (ist working 
+  source("knapp_make.profile.from.XYZ_function.R") # muss im Ordner src liegen (ist working 
   # directory, wenn diese function über LiDARtools_wrap aufgerufen wird.)
-  source("F:/Projekte/Kili/src/knapp_vertical.foliage.profile_function.R") #dito
+  source("knapp_vertical.foliage.profile_function.R") #dito
   library(pls)
   load(paste0(dat_path, pnts_path))
   r_nm <- substr(pnts_path,nchar(pnts_path) - 8, nchar(pnts_path) - 7)

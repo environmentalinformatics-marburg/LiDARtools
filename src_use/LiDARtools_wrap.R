@@ -1,7 +1,7 @@
-# Description: 
+# Description:
 # Author: Alice Ziegler
 # Date: 2018-02-26 17:46:58
-# to do: dat_SR.RData befindet sich eigentlich in anderem Ordner als die ganzen LiDAR parameter. 
+# to do: dat_SR.RData befindet sich eigentlich in anderem Ordner als die ganzen LiDAR parameter.
 # entweder anders programmieren, oder immer dat_SR in den entsprechenden Ordner kopieren
 # traits entfernen
 ####missing structure query!!!!
@@ -10,15 +10,18 @@ rm(list=ls())
 ########################################################################################
 ###Presettings
 ########################################################################################
-#Packages: 
+#Packages:
 library(LiDARtools)
 
-#Sources: 
-setwd("F:/Projekte/Kili/src/")
-sub <- "mar18_50m_resid_nrmlz/"
+#Sources:
+setwd("E:/Projekte/Kili/src/")
+sub <- "mai18_50m_resid_nrmlz_newDB/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
-
+if (file.exists(dat_path)==F){
+  dir.create(file.path(dat_path))
+}
+login_file <- paste0(inpath, ".remote_sensing_userpwd.txt") # optional file in home directory content: user:password
 ########################################################################################
 ###Settings
 ########################################################################################
@@ -26,8 +29,8 @@ dat_path <- paste0("../data/", sub)
 r_pnts <- 25
 d_rst <- 50
 db_layers <- c("kili", "kili2")
-db <- "http://192.168.191.183:8081"
-db_login <- "user:password"
+db_login <- readChar(login_file, file.info(login_file)$size) # optional read account from file
+db <- "http://137.248.191.215:8081"
 tec_crdnt <- read.csv(paste0(inpath,"tec_crdnt.csv"), header=T, sep=",")
 location <- unique(tec_crdnt[, c("plotID", "x_pnt", "y_pnt")])
 rst_type <- c("chm")
@@ -48,20 +51,22 @@ gap_frac_path <- "gap_structure"
 dat_SR_path <- "dat_SR"
 traits_path <- "traits"
 SR_residuals_path <- "SR_residuals"
-lst_vars_path <- c(dat_SR_path, SR_residuals_path, db_str_path, point_str_path, gap_frac_path, traits_path)
+beta_anm_plnt_path <- "beta_anm_plnt"
+lst_vars_path <- c(dat_SR_path, SR_residuals_path, db_str_path, point_str_path,
+                   gap_frac_path, beta_anm_plnt_path, traits_path)
 
 ########################################################################################
 ###Do it (Don't change anything past this point except you know what you are doing!)
 ########################################################################################
-points_query(dat_path = dat_path, location = location, r_pnts = r_pnts)
+points_query(dat_path = dat_path, location = location, r_pnts = r_pnts, db = db, db_login = db_login)
 #usecase get points
 point_structure(dat_path = dat_path, pnts_path = pnts_path)
 
 load(paste0(dat_path, "point_structure.RData"))
 
-db_structure(dat_path = dat_path, r_pnts = r_pnts)
+db_structure(dat_path = dat_path, r_pnts = r_pnts, db = db, db_login = db_login)
 
-raster_query(dat_path = dat_path, d_rst = d_rst, db_layers = db_layers, group_name = group_name, db = db, 
+raster_query(dat_path = dat_path, d_rst = d_rst, db_layers = db_layers, group_name = group_name, db = db,
              db_login = db_login, location = location, rst_type = rst_type)
 
 gap_fraction(dat_path = dat_path, chm_path = chm_path, gap_hght = gap_hght, gap_sze = gap_sze)

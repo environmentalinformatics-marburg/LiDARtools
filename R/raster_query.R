@@ -32,7 +32,7 @@
 
 ########################################################################################
 ########################################################################################
-raster_query <- function(dat_path, d_rst = 50, db_layers = c("kili", "kili2"), db = "http://192.168.191.183:8081",
+raster_query <- function(dat_path, d_rst = 50, db_layers = c("kili", "kili2"), db = "http://137.248.191.215:8081",
                          db_login = "user:password", group_name = "kili", rst_type = c("chm"), location){
   library(rPointDB)
   library(raster)
