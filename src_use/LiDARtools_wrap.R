@@ -52,27 +52,43 @@ dat_SR_path <- "dat_SR"
 traits_path <- "traits"
 SR_residuals_path <- "SR_residuals"
 beta_anm_plnt_path <- "beta_anm_plnt"
-lst_vars_path <- c(dat_SR_path, SR_residuals_path, db_str_path, point_str_path,
-                   gap_frac_path, beta_anm_plnt_path, traits_path)
-
+lst_vars_path_field <- c(dat_SR_path, SR_residuals_path, beta_anm_plnt_path, traits_path)
+lst_vars_path_ldr <- c(db_str_path, point_str_path, gap_frac_path)
+# lst_vars_path <- c(dat_SR_path, SR_residuals_path, beta_anm_plnt_path, traits_path,
+#                    db_str_path, point_str_path, gap_frac_path)
 ########################################################################################
 ###Do it (Don't change anything past this point except you know what you are doing!)
 ########################################################################################
 points_query(dat_path = dat_path, location = location, r_pnts = r_pnts, db = db, db_login = db_login)
+#pnts <- (get(load(paste0(dat_path, "points_25m.RData")))
 #usecase get points
 point_structure(dat_path = dat_path, pnts_path = pnts_path)
 
-load(paste0(dat_path, "point_structure.RData"))
+#point_structure <- get(load(paste0(dat_path, "point_structure.RData")))
 
 db_structure(dat_path = dat_path, r_pnts = r_pnts, db = db, db_login = db_login)
+#db_structure <- get(load(paste0(dat_path, "db_structure.RData")))
 
 raster_query(dat_path = dat_path, d_rst = d_rst, db_layers = db_layers, group_name = group_name, db = db,
              db_login = db_login, location = location, rst_type = rst_type)
 
 gap_fraction(dat_path = dat_path, chm_path = chm_path, gap_hght = gap_hght, gap_sze = gap_sze)
+#gap_frac <- get(load(paste0(dat_path, "gap_structure.RData")))
+
 ###
 #merging
 ###
+#first: merge all that differ in flight 1 and flight 2
+# merge all tables that are not flight sensitive
+# merge both resulting tables together with "keep.all = T" (oder so ähnlich!!!)
 
-var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path)
-tbl <- get(load(paste0(dat_path, "dat_ldr_mrg.RData")))
+###merge fielddata
+#lst_vars_path_field <- c(dat_SR_path, SR_residuals_path, beta_anm_plnt_path, traits_path)
+field_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path_field, descr = "field", mrg_col = "plotID")
+###merge lidardata
+#lst_vars_path_ldr <- c(db_str_path, point_str_path, gap_frac_path)
+ldr_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path_ldr, descr = "ldr", mrg_col = "plotUnq")
+###
+###merge field and ldr
+lst_vars_path <- c("ldr_mrg", "field_mrg")
+dat_ldr_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path, descr = "dat_ldr", mrg_col = "plotID")

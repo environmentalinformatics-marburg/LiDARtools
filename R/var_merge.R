@@ -25,15 +25,28 @@
 ########################################################################################
 ########################################################################################
 
-var_merge <- function(dat_path, lst_vars_path){
+# var_merge <- function(dat_path, lst_vars_path){
+#   for (i in 1:length(lst_vars_path)){
+#     tmp <- get(load(paste0(dat_path,lst_vars_path[i],".RData")))
+#     if(i==1){
+#       mrg_tbl <- tmp
+#     }else{
+#       mrg_tbl <- merge(mrg_tbl,tmp,by.x=c("plotID","plotUnq"),by.y=c("plotID","plotUnq"))
+#     }
+#   }
+#   save(mrg_tbl, file = paste0(dat_path, "dat_ldr_mrg.RData"))
+# }
+#
+var_merge <- function(dat_path, lst_vars_path, descr, mrg_col){
   for (i in 1:length(lst_vars_path)){
-   tmp <- get(load(paste0(dat_path,lst_vars_path[i],".RData")))
+    tmp <- get(load(paste0(dat_path,lst_vars_path[i],".RData")))
     if(i==1){
-    mrg_tbl <- tmp
+      res <- tmp
     }else{
-      mrg_tbl <- merge(mrg_tbl,tmp,by.x="plotID",by.y="plotID")
+      res <- merge(res,tmp,by.x=mrg_col,by.y=mrg_col)
+      mrg_tbl <- res
     }
   }
-  save(mrg_tbl, file = paste0(dat_path, "dat_ldr_mrg", ".RData"))
-  }
-
+  save(mrg_tbl, file = paste0(dat_path, descr, "_mrg", ".RData"))
+  return(mrg_tbl)
+}

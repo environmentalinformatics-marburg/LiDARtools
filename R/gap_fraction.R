@@ -49,10 +49,12 @@ gap_fraction <- function(dat_path, chm_path, gap_hght, gap_sze){
     clear_count <- sum(is.finite(values(sieve)))
     cover_count <- sum(is.na(values(sieve)))
     gap_frac_plt <- clear_count / total_count
-    return(list(substr(i,1,4), gap_frac_plt))
+    plotID <- substr(i,1,4)
+    plotUnq <- paste0(plotID, "_", strsplit(i, "_")[[1]][2])
+    return(list(plotID, plotUnq, gap_frac_plt))
   })
   gap_frac <- as.data.frame(do.call(rbind, gap_frac_all))
-  colnames(gap_frac) <- c("plotID", "gap_frac")
+  colnames(gap_frac) <- c("plotID", "plotUnq", "gap_frac")
   for (i in 1:ncol(gap_frac)) {
     gap_frac[, i] <- unlist(gap_frac[, i])
   }

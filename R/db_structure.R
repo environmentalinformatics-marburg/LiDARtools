@@ -53,6 +53,8 @@ db_structure <- function( dat_path, r_pnts, db_layers = c("kili", "kili2"), grou
       functions <- functions_df$name
     }
   df <- pointdb$process(areas=areas, functions=functions)
+  df$plotUnq <- paste0(df$name, "_", i)
+  return(df)
   })
   db_structure <- do.call(rbind, str_var_all_lay)
   colnames(db_structure)[1] <- "plotID"
