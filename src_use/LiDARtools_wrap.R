@@ -14,8 +14,8 @@ rm(list=ls())
 library(LiDARtools)
 
 #Sources:
-setwd("E:/Projekte/Kili/src/")
-sub <- "mai18_50m_resid_nrmlz_newDB/"
+setwd("D:/Uni/Projekte/Kili/src/")
+sub <- "mai18_50m_resid_nrmlz_newDB_tmp/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
 if (file.exists(dat_path)==F){
@@ -90,5 +90,5 @@ field_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path_field,
 ldr_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path_ldr, descr = "ldr", mrg_col = "plotUnq")
 ###
 ###merge field and ldr
-lst_vars_path <- c("ldr_mrg", "field_mrg")
+lst_vars_path <- c("field_mrg", "ldr_mrg")
 dat_ldr_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path, descr = "dat_ldr", mrg_col = "plotID")

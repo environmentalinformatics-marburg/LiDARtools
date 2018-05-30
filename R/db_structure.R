@@ -44,7 +44,7 @@ db_structure <- function( dat_path, r_pnts, db_layers = c("kili", "kili2"), grou
     pointdb <- remotesensing$pointdb(i)
 
   # create areas of all POIs in a POI-group with 10 meter squares
-    areas <- mapply(function(name, x, y) {return(extent_diameter(x=x, y=y, d=10))}, location$plotID,
+    areas <- mapply(function(name, x, y) {return(extent_diameter(x=x, y=y, d=(2*r_pnts)))}, location$plotID,
                             location$x_pnt, location$y_pnt)
 
   #get all lidar index processing functions
