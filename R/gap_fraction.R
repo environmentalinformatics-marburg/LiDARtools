@@ -50,7 +50,7 @@ gap_fraction <- function(dat_path, chm_path, gap_hght, gap_sze){
     cover_count <- sum(is.na(values(sieve)))
     gap_frac_plt <- clear_count / total_count
     plotID <- substr(i,1,4)
-    plotUnq <- paste0(plotID, "_", strsplit(i, "_")[[1]][2])
+    plotUnq <- paste0(strsplit(i, "_")[[1]][1:6], collapse = "_")
     return(list(plotID, plotUnq, gap_frac_plt))
   })
   gap_frac <- as.data.frame(do.call(rbind, gap_frac_all))

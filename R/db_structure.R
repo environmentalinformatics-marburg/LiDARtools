@@ -1,5 +1,5 @@
 #' Query LiDAR structure parameters from database and write them into table
-#' ###TEst change
+#' ###Test change
 #'
 #' @description
 #' Query LiDAR structure variables from database and write them into table by landuse.
@@ -28,7 +28,9 @@
 #' #Not run
 #' }
 #'
-db_structure <- function( dat_path, r_pnts, db_layers = c("kili", "kili2"), group_name = "kili",
+db_structure <- function( dat_path, r_pnts,
+                          db_layers = c("kili_campaign1_lidar_classified_2015", "kili_campaign2_lidar_classified_2016"),
+                          group_name = "kili_poi_plots",
                              db = "http://137.248.191.215:8081", db_login = "user:password", location = NA,
                              functions = NULL){
   library(rPointDB)

@@ -28,8 +28,11 @@
 #' #Not run
 #' }
 #'
-points_query <- function( dat_path, r_pnts, db_layers = c("kili", "kili2"), db = "http://137.248.191.215:8081",
-                    db_login = "user:password", location){
+points_query <- function( dat_path, r_pnts,
+                          db_layers = c("kili_campaign1_lidar_classified_2015",
+                                        "kili_campaign2_lidar_classified_2016"),
+                          db = "http://137.248.191.215:8081",
+                          db_login = "user:password", location){
   library(rPointDB)
   library(dplyr)
   remotesensing <- RemoteSensing$new(db, db_login)

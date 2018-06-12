@@ -15,7 +15,7 @@ library(LiDARtools)
 
 #Sources:
 setwd("D:/Uni/Projekte/Kili/src/")
-sub <- "mai18_50m_resid_nrmlz_newDB_rad/"
+sub <- "jun18_50m/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
 if (file.exists(dat_path)==F){
@@ -28,13 +28,14 @@ login_file <- paste0(inpath, ".remote_sensing_userpwd.txt") # optional file in h
 
 r_pnts <- 25
 d_rst <- 50
-db_layers <- c("kili", "kili2")
+# db_layers <- c("kili", "kili2")
+db_layers <- c("kili_campaign1_lidar_classified_2015", "kili_campaign2_lidar_classified_2016")
 db_login <- readChar(login_file, file.info(login_file)$size) # optional read account from file
 db <- "http://137.248.191.215:8081"
 tec_crdnt <- read.csv(paste0(inpath,"tec_crdnt.csv"), header=T, sep=",")
 location <- unique(tec_crdnt[, c("plotID", "x_pnt", "y_pnt")])
 rst_type <- c("chm")
-group_name <- "kili"
+group_name <- "kili_poi_plots"
 gap_hght <- 10
 gap_sze <- 9
 trait <- read.csv(paste0(inpath, "cwm_bird_traits_ja.csv"), header = T, sep = ";", dec = ",")
@@ -59,14 +60,20 @@ lst_vars_path_ldr <- c(db_str_path, point_str_path, gap_frac_path)
 ########################################################################################
 ###Do it (Don't change anything past this point except you know what you are doing!)
 ########################################################################################
-points_query(dat_path = dat_path, location = location, r_pnts = r_pnts, db = db, db_login = db_login)
+points_query(db_layers = db_layers,
+             dat_path = dat_path,
+             location = location,
+             r_pnts = r_pnts,
+             db = db,
+             db_login = db_login)
 #pnts <- (get(load(paste0(dat_path, "points_25m.RData")))
 #usecase get points
 point_structure(dat_path = dat_path, pnts_path = pnts_path)
 
 #point_structure <- get(load(paste0(dat_path, "point_structure.RData")))
 
-db_structure(dat_path = dat_path, r_pnts = r_pnts, db = db, db_login = db_login)
+db_structure(dat_path = dat_path, r_pnts = r_pnts, db_layers= db_layers,
+             db = db, db_login = db_login, group = "kili_poi_plots")
 #db_structure <- get(load(paste0(dat_path, "db_structure.RData")))
 
 raster_query(dat_path = dat_path, d_rst = d_rst, db_layers = db_layers, group_name = group_name, db = db,
