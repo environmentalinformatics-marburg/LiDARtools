@@ -15,7 +15,7 @@ library(LiDARtools)
 
 #Sources:
 setwd("D:/Uni/Projekte/Kili/src/")
-sub <- "mai18_50m_resid_nrmlz_newDB_tmp/"
+sub <- "mai18_50m_resid_nrmlz_newDB_rad/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
 if (file.exists(dat_path)==F){
