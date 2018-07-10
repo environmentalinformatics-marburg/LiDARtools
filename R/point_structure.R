@@ -65,14 +65,14 @@ point_structure <- function(dat_path, pnts_path = NA){
     av_angl <- mean(abs(pnts_tmp$scanAngleRank))
     nmbr_pnts_org <- nrow(pnts_tmp)
 
-    ###LAI calculation
-    XYZ.table <- pnts_tmp[,c(which(colnames(pnts_tmp) == "x") : which(colnames(pnts_tmp) == "z"))]
-    profile <- make.profile.from.XYZ(XYZ.table = XYZ.table)
-    vert_fol_profile <- vertical.foliage.profile(profile = profile, k = 0.3)
-    LAI <- sum(vert_fol_profile)
+    # ###LAI calculation
+    # XYZ.table <- pnts_tmp[,c(which(colnames(pnts_tmp) == "x") : which(colnames(pnts_tmp) == "z"))]
+    # profile <- make.profile.from.XYZ(XYZ.table = XYZ.table)
+    # vert_fol_profile <- vertical.foliage.profile(profile = profile, k = 0.3)
+    # LAI <- sum(vert_fol_profile)
 
     return(list(plotID = unique(pnts_tmp$plotID), plotUnq = i, max_hght = max_hght, sd = sd_hght, mdn_rtrn = mdn_rtrn, max_rtrn = max_rtrn,
-                sd_rtrn_1 = sd_rtrn_1, sd_nmbr_rtrn = sd_nmbr_rtrn, LAI = LAI, qntl_0 = qntl_0, qntl_25 = qntl_25,
+                sd_rtrn_1 = sd_rtrn_1, sd_nmbr_rtrn = sd_nmbr_rtrn, qntl_0 = qntl_0, qntl_25 = qntl_25,
                 qntl_50 = qntl_50, qntl_75 = qntl_75, qntl_100 = qntl_100, qntl_rng = qntl_rng,
                 #cffnt_intcpt = cffnt_intcpt, cffnt_x = cffnt_x, cffnt_x2 = cffnt_x2, cffnt_x3 = cffnt_x3,
                 layer = layer, max_angl = max_angl, av_angl = av_angl, nmbr_pnts_org = nmbr_pnts_org))
