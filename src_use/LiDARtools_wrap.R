@@ -15,7 +15,7 @@ library(LiDARtools)
 
 #Sources:
 setwd("D:/Uni/Projekte/Kili/src/")
-sub <- "jul18_50m/"
+sub <- "aug18/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
 if (file.exists(dat_path)==F){
@@ -54,7 +54,10 @@ traits_path <- "traits"
 SR_residuals_path <- "SR_residuals"
 beta_residuals_path <- "beta_residuals"
 beta_anm_plnt_path <- "beta_anm_plnt"
-lst_vars_path_field <- c(dat_SR_path, SR_residuals_path, beta_anm_plnt_path, beta_residuals_path, traits_path)
+troph_sum_path <- "troph_sum"
+troph_sum_residuals_path <- "troph_sum_residuals"
+lst_vars_path_field <- c(dat_SR_path, SR_residuals_path, beta_anm_plnt_path, beta_residuals_path,
+                         troph_sum_path, troph_sum_residuals_path, traits_path)
 lst_vars_path_ldr <- c(db_str_path, point_str_path, gap_frac_path)
 # lst_vars_path <- c(dat_SR_path, SR_residuals_path, beta_anm_plnt_path, traits_path,
 #                    db_str_path, point_str_path, gap_frac_path)
@@ -100,3 +103,6 @@ ldr_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path_ldr, des
 ###merge field and ldr
 lst_vars_path <- c("field_mrg", "ldr_mrg")
 dat_ldr_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path, descr = "dat_ldr", mrg_col = "plotID")
+
+
+save(dat_ldr_mrg, file = paste0(dat_path, "dat_ldr_mrg.RData"))
