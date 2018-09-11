@@ -13,9 +13,14 @@ rm(list=ls())
 #Packages:
 library(LiDARtools)
 
+###before this
+##preprocessing.R
+##troph_sum_tbl.R
+##optional beta_div.R need to be executed
+
 #Sources:
 setwd("D:/Uni/Projekte/Kili/src/")
-sub <- "aug18/"
+sub <- "sep18/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
 if (file.exists(dat_path)==F){
@@ -52,11 +57,11 @@ gap_frac_path <- "gap_structure"
 dat_SR_path <- "dat_SR"
 traits_path <- "traits"
 SR_residuals_path <- "SR_residuals"
-beta_residuals_path <- "beta_residuals"
-beta_anm_plnt_path <- "beta_anm_plnt"
+#beta_residuals_path <- "beta_residuals"
+#beta_anm_plnt_path <- "beta_anm_plnt"
 troph_sum_path <- "troph_sum"
 troph_sum_residuals_path <- "troph_sum_residuals"
-lst_vars_path_field <- c(dat_SR_path, SR_residuals_path, beta_anm_plnt_path, beta_residuals_path,
+lst_vars_path_field <- c(dat_SR_path, SR_residuals_path, #beta_anm_plnt_path, beta_residuals_path,
                          troph_sum_path, troph_sum_residuals_path, traits_path)
 lst_vars_path_ldr <- c(db_str_path, point_str_path, gap_frac_path)
 # lst_vars_path <- c(dat_SR_path, SR_residuals_path, beta_anm_plnt_path, traits_path,
@@ -89,9 +94,8 @@ gap_fraction(dat_path = dat_path, chm_path = chm_path, gap_hght = gap_hght, gap_
 ###
 #merging
 ###
-#first: merge all that differ in flight 1 and flight 2
-# merge all tables that are not flight sensitive
-# merge both resulting tables together with "keep.all = T" (oder so ähnlich!!!)
+
+
 
 ###merge fielddata
 #lst_vars_path_field <- c(dat_SR_path, SR_residuals_path, beta_anm_plnt_path, traits_path)
@@ -103,6 +107,5 @@ ldr_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path_ldr, des
 ###merge field and ldr
 lst_vars_path <- c("field_mrg", "ldr_mrg")
 dat_ldr_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path, descr = "dat_ldr", mrg_col = "plotID")
-
 
 save(dat_ldr_mrg, file = paste0(dat_path, "dat_ldr_mrg.RData"))
