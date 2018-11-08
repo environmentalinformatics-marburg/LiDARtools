@@ -11,7 +11,7 @@
 #' @param group_name name of the group in the database
 #' @param rst_type vector of the raster layers that should be derived from database ()
 #' @param location data.frame with at least 3 columns with the column names "plotID", "xpnt" and "y_pnt".
-#' @param pnts_path filename of the RData created in \code{\link{points_query}}
+#' @param pnts_path filename of the rds created in \code{\link{points_query}}
 #'
 #' @return One Geotiff per location
 #'

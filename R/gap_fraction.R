@@ -8,7 +8,7 @@
 #' @param gap_hght threshold that defines maximum height of vegetation within a gap
 #' @param gap_sze minimum number of connected pixel, that are interpreted as a gap
 #'
-#' @return RData file containing a data.frame called "gap_structure_<sidelength of raster>"
+#' @return rds file containing a data.frame called "gap_structure_<sidelength of raster>"
 #'
 #' @name gap_fraction
 #'
@@ -58,7 +58,7 @@ gap_fraction <- function(dat_path, chm_path, gap_hght, gap_sze){
   for (i in 1:ncol(gap_frac)) {
     gap_frac[, i] <- unlist(gap_frac[, i])
   }
-  save(gap_frac, file = paste0(dat_path, "gap_structure.RData"))
+  saveRDS(gap_frac, file = paste0(dat_path, "gap_structure.rds"))
 }
 
 

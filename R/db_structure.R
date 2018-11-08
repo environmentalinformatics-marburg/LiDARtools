@@ -11,7 +11,7 @@
 #' @param db_login string of username and password for the database (default = "username:password")
 #' @param location data.frame with at least 3 columns with the column names "plotID", "xpnt" and "y_pnt".
 #'
-#' @return RData file containing a data.frame called "pnts"
+#' @return rds file containing a data.frame called "pnts"
 #'
 #' @name db_structure
 #'
@@ -60,5 +60,5 @@ db_structure <- function( dat_path, r_pnts,
   })
   db_structure <- do.call(rbind, str_var_all_lay)
   colnames(db_structure)[1] <- "plotID"
-  save(db_structure, file = paste0(dat_path, "db_structure.RData"))
+  saveRDS(db_structure, file = paste0(dat_path, "db_structure.rds"))
   }

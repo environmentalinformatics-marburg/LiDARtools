@@ -4,9 +4,9 @@
 #' Calculate structural variables from point table from \code{\link{points_query}}.
 #'
 #' @param dat_path path for the table output
-#' @param pnts_path filename of the RData created in \code{\link{points_query}}
+#' @param pnts_path filename of the rds created in \code{\link{points_query}}
 #'
-#' @return RData file containing a data.frame called "ldr_str_pnts"
+#' @return rds file containing a data.frame called "ldr_str_pnts"
 #'
 #' @name point_structure
 #'
@@ -31,7 +31,7 @@ point_structure <- function(dat_path, pnts_path = NA){
   # directory, wenn diese function über LiDARtools_wrap aufgerufen wird.)
   source("knapp_vertical.foliage.profile_function.R") #dito
   library(pls)
-  load(paste0(dat_path, pnts_path))
+  pnts <- readRDS(paste0(dat_path, pnts_path))
   r_nm <- substr(pnts_path,nchar(pnts_path) - 8, nchar(pnts_path) - 7)
   pnts$plotUnq <- paste0(pnts$plotID, "_", pnts$layer)
 
@@ -81,5 +81,5 @@ point_structure <- function(dat_path, pnts_path = NA){
   for (i in 1:ncol(point_structure)) {
     point_structure[, i] <- unlist(point_structure[, i])
   }
-  save(point_structure, file = paste0(dat_path, "point_structure.RData"))
+  saveRDS(point_structure, file = paste0(dat_path, "point_structure.rds"))
 }

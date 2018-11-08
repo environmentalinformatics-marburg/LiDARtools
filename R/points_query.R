@@ -11,7 +11,7 @@
 #' @param db_login string of username and password for the database (default = "username:password")
 #' @param location data.frame with at least 3 columns with the column names "plotID", "xpnt" and "y_pnt".
 #'
-#' @return RData file containing a data.frame called "pnts"
+#' @return  file containing a data.frame called "pnts"
 #'
 #' @name points_query
 #'
@@ -61,7 +61,7 @@ points_query <- function( dat_path, r_pnts,
                   which(colnames(pnts) == "x") : which(colnames(pnts) == "classificationFlags"),
                   which(colnames(pnts) == "layer") : which(colnames(pnts) == "h_rel"))]
 
-  save(pnts, file = paste0(dat_path, "points_", r_pnts, "m.RData"))
+  saveRDS(pnts, file = paste0(dat_path, "points_", r_pnts, "m.rds"))
   #write(paste0("r_pnts = ", r_pnts), file = paste0(dat_path, "points_", r_pnts, "m.txt"))
 
 

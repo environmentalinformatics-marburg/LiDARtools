@@ -39,7 +39,7 @@
 #
 var_merge <- function(dat_path, lst_vars_path, descr, mrg_col){
   for (i in 1:length(lst_vars_path)){
-    tmp <- get(load(paste0(dat_path,lst_vars_path[i],".RData")))
+    tmp <- readRDS(paste0(dat_path,lst_vars_path[i],".rds"))
     if(i==1){
       res <- tmp
     }else{
@@ -47,6 +47,6 @@ var_merge <- function(dat_path, lst_vars_path, descr, mrg_col){
       mrg_tbl <- res
     }
   }
-  save(mrg_tbl, file = paste0(dat_path, descr, "_mrg", ".RData"))
+  saveRDS(mrg_tbl, file = paste0(dat_path, descr, "_mrg", ".rds"))
   return(mrg_tbl)
 }
