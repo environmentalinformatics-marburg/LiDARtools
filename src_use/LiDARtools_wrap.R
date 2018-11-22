@@ -13,13 +13,15 @@ rm(list=ls())
 #Packages:
 library(LiDARtools)
 
+
 ###before this
 ##00_preprocessing.R
 ##optional beta_div.R need to be executed
 
 #Sources:
-setwd("D:/Uni/Projekte/Kili/src/")
-sub <- "okt18/"
+setwd("C:/Users/Alice/Uni/Projekte/Kili/src/")
+# setwd(dirname(rstudioapi::getSourceEditorContext()[[2]]))
+sub <- "nov18/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
 if (file.exists(dat_path)==F){
@@ -77,7 +79,7 @@ points_query(db_layers = db_layers,
              r_pnts = r_pnts,
              db = db,
              db_login = db_login)
-#pnts <- (get(load(paste0(dat_path, "points_25m.RData")))
+#pnts <- readRDS(paste0(dat_path, "points_25m.rds"))
 #usecase get points
 point_structure(dat_path = dat_path, pnts_path = pnts_path)
 
