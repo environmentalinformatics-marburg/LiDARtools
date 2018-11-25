@@ -21,7 +21,7 @@ library(LiDARtools)
 #Sources:
 setwd("C:/Users/Alice/Uni/Projekte/Kili/src/")
 # setwd(dirname(rstudioapi::getSourceEditorContext()[[2]]))
-sub <- "nov18/"
+sub <- "nov18_test/"
 inpath <- "../data/" # only original files
 dat_path <- paste0("../data/", sub)
 if (file.exists(dat_path)==F){
@@ -60,12 +60,12 @@ db_str_path <- "db_structure"
 gap_frac_path <- "gap_structure"
 dat_SR_path <- "dat_SR"
 #traits_path <- "traits"
-residuals_path <- "tbl_res"
+# residuals_path <- "tbl_res"
 #beta_residuals_path <- "beta_residuals"
 #beta_anm_plnt_path <- "beta_anm_plnt"
 troph_sum_path <- "troph_sum"
 # troph_sum_residuals_path <- "troph_sum_residuals"
-lst_vars_path_field <- c(dat_SR_path, residuals_path, #SR_residuals_path, #beta_anm_plnt_path, beta_residuals_path,
+lst_vars_path_field <- c(dat_SR_path, #residuals_path, #SR_residuals_path, #beta_anm_plnt_path, beta_residuals_path,
                          troph_sum_path) #, troph_sum_residuals_path, traits_path)
 lst_vars_path_ldr <- c(db_str_path, point_str_path, gap_frac_path)
 # lst_vars_path <- c(dat_SR_path, SR_residuals_path, beta_anm_plnt_path, traits_path,
@@ -109,5 +109,7 @@ ldr_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path_ldr, des
 ###merge field and ldr
 lst_vars_path <- c("field_mrg", "ldr_mrg")
 dat_ldr_mrg <- var_merge(dat_path = dat_path, lst_vars_path = lst_vars_path, descr = "dat_ldr", mrg_col = "plotID")
+dat_ldr_mrg$plotUnq <- as.factor(dat_ldr_mrg$plotUnq)
+dat_ldr_mrg <- dat_ldr_mrg[,!c(grepl("plotID\\.", colnames(dat_ldr_mrg)))]
 
 saveRDS(dat_ldr_mrg, file = paste0(dat_path, "dat_ldr_mrg.rds"))
