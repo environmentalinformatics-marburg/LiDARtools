@@ -27,13 +27,14 @@
 # dat_path <- "C:/Users/Alice/Uni/Projekte/Kili/data/dez18/LiDAR/"
 # source("C:/Users/Alice/Uni/Projekte/Kili/src/knapp_make.profile.from.XYZ_function.R") # muss im Ordner src liegen (ist working
 # source("C:/Users/Alice/Uni/Projekte/Kili/src/knapp_vertical.foliage.profile_function.R") #dito
-
 ########################################################################################
 point_structure <- function(dat_path){
   source("knapp_make.profile.from.XYZ_function.R") # muss im Ordner src liegen (ist working
   # directory, wenn diese function über LiDARtools_wrap aufgerufen wird.)
   source("knapp_vertical.foliage.profile_function.R") #dito
   library(pls)
+  print(getwd())
+  print(dat_path)
   pnts_path <- list.files (path = dat_path, pattern = "points")
   pnts <- readRDS(paste0(dat_path, pnts_path))
   r_nm <- substr(pnts_path,nchar(pnts_path) - 8, nchar(pnts_path) - 7)
