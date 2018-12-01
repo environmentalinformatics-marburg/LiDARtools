@@ -4,7 +4,7 @@
 #' Calculate structural variables from point table from \code{\link{points_query}}.
 #'
 #' @param dat_path path for the table output
-#' @param pnts_path filename of the rds created in \code{\link{points_query}}
+# @param pnts_path filename of the rds created in \code{\link{points_query}}
 #'
 #' @return rds file containing a data.frame called "ldr_str_pnts"
 #'
@@ -35,7 +35,7 @@ point_structure <- function(dat_path){
   library(pls)
   print(getwd())
   print(dat_path)
-  pnts_path <- list.files (path = dat_path, pattern = "points")
+  pnts_path <- list.files(path = dat_path, pattern = "points")
   pnts <- readRDS(paste0(dat_path, pnts_path))
   r_nm <- substr(pnts_path,nchar(pnts_path) - 8, nchar(pnts_path) - 7)
   pnts$plotUnq <- paste0(pnts$plotID, "_", pnts$layer)
