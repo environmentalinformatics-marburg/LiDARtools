@@ -31,11 +31,18 @@
 points_query <- function( dat_path, r_pnts,
                           db_layers = c("kili_campaign1_lidar_classified_2015",
                                         "kili_campaign2_lidar_classified_2016"),
+                          group_name = "kili_poi_plots",
+                          location = NA,
                           db = "http://137.248.191.215:8081",
-                          db_login = "user:password", location){
+                          db_login = "user:password"){
   library(rPointDB)
   library(dplyr)
   remotesensing <- RemoteSensing$new(db, db_login)
+  if(missing(location)){
+    # get one POI group
+    location <- remotesensing$poi_group(group_name=group_name)
+    colnames(location) <- c("plotID", "x_pnt","y_pnt")
+  }
   points_all_lay <- lapply(db_layers, function(i){
     pointdb <- remotesensing$lidar(i)
     points_lay <- lapply(location$plotID, function(j){
