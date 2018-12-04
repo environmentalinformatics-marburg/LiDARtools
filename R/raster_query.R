@@ -35,12 +35,17 @@
 raster_query <- function(dat_path, d_rst = 50,
                          db_layers = c("kili_campaign1_lidar_classified_2015", "kili_campaign2_lidar_classified_2016"),
                          db = "http://137.248.191.215:8081",
-                         db_login = "user:password",
+                         db_login,
                          group_name = "kili_poi_plots",
-                         rst_type = c("chm"), location){
+                         rst_type = c("chm"), location = NA){
   library(rPointDB)
   library(raster)
   remotesensing <- RemoteSensing$new(db, db_login)
+  if(missing(location)){
+    # get one POI group
+    location <- remotesensing$poi_group(group_name=group_name)
+    colnames(location) <- c("plotID", "x_pnt","y_pnt")
+  }
   rst_all_lay <- lapply(db_layers, function(i){
     pointdb <- remotesensing$lidar(i)
     rst_lay <- lapply(location$plotID, function(j){
