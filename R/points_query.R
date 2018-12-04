@@ -34,7 +34,10 @@ points_query <- function( dat_path, r_pnts,
                           group_name = "kili_poi_plots",
                           location = NA,
                           db = "http://137.248.191.215:8081",
-                          db_login = "user:password"){
+                          db_login){
+  #dat_path <- "C:/Users/Alice/Uni/Projekte/Kili/data/dez18/LiDAR/"
+  #login_file <- "C:/Users/Alice/Uni/Projekte/Kili/data/.remote_sensing_userpwd.txt"
+  #db_login <- readChar(login_file, file.info(login_file)$size) # optional read account from file"
   library(rPointDB)
   library(dplyr)
   remotesensing <- RemoteSensing$new(db, db_login)
@@ -44,12 +47,14 @@ points_query <- function( dat_path, r_pnts,
     colnames(location) <- c("plotID", "x_pnt","y_pnt")
   }
   points_all_lay <- lapply(db_layers, function(i){
+    #i <- "kili_campaign1_lidar_classified_2015"
     pointdb <- remotesensing$lidar(i)
     points_lay <- lapply(location$plotID, function(j){
-      extent <- extent_radius(x = location$x_pnt[j], y = location$y_pnt[j], r = r_pnts)
+      # extent <- extent_radius(x = location$x_pnt[j], y = location$y_pnt[j], r = r_pnts) ###need if location is set with coordinates
+      extent <- extent_radius(x = location$x_pnt[which(location$plotID == j)], y = location$y_pnt[which(location$plotID == j)], r = r_pnts)
       points <- pointdb$query(ext = extent, normalise = "ground")
       if (nrow(points)!= 0){
-        points$plotID <- location$plotID[j]
+        points$plotID <- j
         points$layer <- i
       }
       return(points)
